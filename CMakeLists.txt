@@ -11,6 +11,10 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_CXX_FLAGS "-Wall -Wextra")
+set(CMAKE_CXX_FLAGS_DEBUG "-g")
+set(CMAKE_CXX_FLAGS_RELEASE "-O3")
+
 # QtCreator supports the following variables for Android, which are identical to qmake Android variables.
 # Check http://doc.qt.io/qt-5/deployment-android.html for more information.
 # They need to be set before the find_package(Qt5 ...) call.
@@ -24,9 +28,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 
-set(TS_FILES TicTacToe_en_US.ts)
+#set(TS_FILES TicTacToe_en_US.ts)
 
 if(ANDROID)
   add_library(TicTacToe SHARED
@@ -34,7 +38,9 @@ if(ANDROID)
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    ${TS_FILES}
+    mythread.h
+    mythread.cpp
+    #${TS_FILES}
   )
 else()
   add_executable(TicTacToe
@@ -42,10 +48,12 @@ else()
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
-    ${TS_FILES}
+    mythread.h
+    mythread.cpp
+    #${TS_FILES}
   )
 endif()
 
-target_link_libraries(TicTacToe PRIVATE Qt5::Widgets)
+target_link_libraries(TicTacToe PRIVATE Qt6::Widgets)
 
-qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
+#qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
